@@ -1,0 +1,353 @@
+<html>
+	<head>
+		<title>Nhà Tam Giác - Homewear</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">         
+    	<link rel="stylesheet/less" type="text/css" href="{{url_for('static',filename='style.less')}}" /> 
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>   
+    	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script> 
+		<script src="{{url_for('static',filename='scripts/luxy.js')}}" charset="utf-8"></script>
+		<script src="{{url_for('static',filename='scripts/jquery.easing.1.3.js')}}" charset="utf-8"></script>
+
+		<script type='text/javascript'>
+			ROOT = {{ request.script_root|tojson|safe }};
+		</script>
+	</head>
+	<body>
+		<div id='background-changer' class='background'></div>
+		<div id='background-changer-flip' class='background-flip'></div>
+
+		<div class='contents-wrapper'>
+
+			<div id='luxy'>
+
+				<header class='search-bar'>
+					<div class='search-bar-container'>
+						<div class='logo-container'>
+							<img src="{{url_for('static',filename='images/logo.png')}}">
+						</div>
+						<div class='title-container'>
+							<p>Nhà Tam Giác</p>
+						</div>
+						<div class='search-box'>
+							<input type='text' placeholder='Tìm kiếm sản phẩm...'>
+						</div>
+						<div class='search-glass'>
+						</div>
+						<div class='checkout-cart'>
+						</div>
+					</div>
+				</header>
+				<header class='navigation-bar'>
+					<div class='nav-bar-container'>
+						<div class='nav-choice-container'>
+							<div class='nav-choice-text'>
+								<a href='#'>Trang chủ</a>
+							</div>
+							<div class='nav-choice-text'>
+								<a href='#'>Sản phẩm</a>
+							</div>
+							<div class='nav-choice-text'>
+								<a href='#'>Liên hệ</a>
+							</div>
+							<div class='nav-choice-text'>
+								<a href='#'>Hướng dẫn mua hàng</a>
+							</div>
+							{% if current_user.is_authenticated %}
+								{% if current_user.permission == 'admin' %}
+									<div class='nav-choice-text'>
+										<a href='{{ url_for("products.new_product") }}'>Tạo sản phẩm mới</a>
+									</div>
+								{% endif %}
+							{% endif %}
+							{% if current_user.is_authenticated %}
+							<div class='nav-choice-text'>
+								<a href='{{ url_for("auth.logout") }}'>Đăng xuất</a>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</header>
+
+
+				<section class='index-section'>
+					<div class='wrapper'>
+						<div class='index-icons-container'>
+							<div id='arrow-left' class='arrow'>
+								  <div class="arrow-top"></div>
+								  <div class="arrow-bottom"></div>
+							</div>
+							<div id='arrow-right' class='arrow'>
+								<div class='arrow-top'></div>
+								<div class='arrow-bottom'></div>
+							</div>
+						</div>
+						<div class='index-image-scroller'>
+							<div class='scroller-dot-container'>
+								<div id='scroll-1' class='scroller-dot'>
+								</div>
+							</div>
+							<div class='scroller-dot-container'>
+								<div id='scroll-2' class='scroller-dot'>
+								</div>
+							</div>
+							<div class='scroller-dot-container'>
+								<div id='scroll-3' class='scroller-dot'>
+								</div>
+							</div>
+							<div class='scroller-dot-container'>
+								<div id='scroll-4' class='scroller-dot'>
+								</div>
+							</div>
+							<div class='scroller-dot-container'>
+								<div id='scroll-5' class='scroller-dot'>
+								</div>
+							</div>
+							<div class='scroller-dot-container'>
+								<div id='scroll-6' class='scroller-dot'>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class='product-section'>
+					<div class='wrapper'>
+						<div class='product-text-container'>
+							<div class='product-text'>
+								<div class='product-icon'>
+								</div>
+								<span>Sản phẩm nổi bật</span>
+							</div>
+						</div>
+						<div class='product-breakline-container'>
+							<div class='line-container'><div class='shortline'></div></div>
+							<div class='line-container'><div class='longline'></div></div>
+							<div class='line-container'><div class='shortline'></div></div>
+						</div>
+
+						<div class='product-container'>
+							<div class='product-row'>
+								<div class='product-box-div'>
+									<div class='product-box'>
+										<div class='product-box-title'>
+											Pink Hoodie
+											<div class='product-box-description'>
+												Some Description
+											</div>
+										</div>
+										<div class='product-box-image-paddable'>
+											<div class='product-box-image'>
+												<img src="{{url_for('static',filename='images/hoodie.jpeg')}}">
+											</div>
+										</div>
+										<div class='product-box-style'>
+										</div>
+										<div class='product-box-container'>
+											<div class='product-box-price'>
+												150.000 VNĐ
+											</div>
+											<div class='product-box-add-to-cart'>
+												<div>Thêm vào giỏ</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class='product-box-div'>
+									<div class='product-box'>
+										<div class='product-box-title'>
+											Black Hoodie
+											<div class='product-box-description'>
+												Some Description
+											</div>
+										</div>
+										<div class='product-box-image-paddable'>
+											<div class='product-box-image'>
+												<img src="{{url_for('static',filename='images/hoodie2.jpeg')}}">
+											</div>
+										</div>
+										<div class='product-box-style'>
+										</div>
+										<div class='product-box-container'>
+											<div class='product-box-price'>
+												250.000 VNĐ
+											</div>
+											<div class='product-box-add-to-cart'>
+												<div>Thêm vào giỏ</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class='product-box-div'>
+									<div class='product-box'>
+										<div class='product-box-title'>
+											Dark Pink Hoodie
+											<div class='product-box-description'>
+												Some Description
+											</div>
+										</div>
+										<div class='product-box-image-paddable'>
+											<div class='product-box-image'>
+												<img src="{{url_for('static',filename='images/hoodie3.jpeg')}}">
+											</div>
+										</div>
+										<div class='product-box-style'>
+										</div>
+										<div class='product-box-container'>
+											<div class='product-box-price'>
+												350.000 VNĐ
+											</div>
+											<div class='product-box-add-to-cart'>
+												<div>Thêm vào giỏ</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+							<div class='product-row'>
+								<div class='product-box-div'>
+									<div class='product-box'>
+										<div class='product-box-title'>
+											Pink Hoodie
+											<div class='product-box-description'>
+												Some Description
+											</div>
+										</div>
+										<div class='product-box-image-paddable'>
+											<div class='product-box-image'>
+												<img src="{{url_for('static',filename='images/hoodie.jpeg')}}">
+											</div>
+										</div>
+										<div class='product-box-style'>
+										</div>
+										<div class='product-box-container'>
+											<div class='product-box-price'>
+												150.000 VNĐ
+											</div>
+											<div class='product-box-add-to-cart'>
+												<div>Thêm vào giỏ</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class='product-box-div'>
+									<div class='product-box'>
+										<div class='product-box-title'>
+											Black Hoodie
+											<div class='product-box-description'>
+												Some Description
+											</div>
+										</div>
+										<div class='product-box-image-paddable'>
+											<div class='product-box-image'>
+												<img src="{{url_for('static',filename='images/hoodie2.jpeg')}}">
+											</div>
+										</div>
+										<div class='product-box-style'>
+										</div>
+										<div class='product-box-container'>
+											<div class='product-box-price'>
+												250.000 VNĐ
+											</div>
+											<div class='product-box-add-to-cart'>
+												<div>Thêm vào giỏ</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class='product-box-div'>
+									<div class='product-box'>
+										<div class='product-box-title'>
+											Dark Pink Hoodie
+											<div class='product-box-description'>
+												Some Description
+											</div>
+										</div>
+										<div class='product-box-image-paddable'>
+											<div class='product-box-image'>
+												<img src="{{url_for('static',filename='images/hoodie3.jpeg')}}">
+											</div>
+										</div>
+										<div class='product-box-style'>
+										</div>
+										<div class='product-box-container'>
+											<div class='product-box-price'>
+												350.000 VNĐ
+											</div>
+											<div class='product-box-add-to-cart'>
+												<div>Thêm vào giỏ</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+						</div>
+
+						<div class='product-scroll'>
+							<p>Xem thêm</p>
+							<div class='scroll-arrow-paddable'>
+								<div class='scroll-arrow'></div>
+							</div>
+						</div>
+
+						<div class='product-ads'>
+							<div class='quality'>
+								Sản phẩm chất lượng cao
+							</div>
+							<div class='free'>
+								Miễn phí ship cho mặt hàng trên 500K
+							</div>
+							<div class='fast'>
+								Hàng về thường xuyên
+							</div>
+						</div>
+
+				</section>
+				<section class='contact-section'>
+					<div class='wrapper'>
+						<div class='shipping-container'>
+							<h3>GIAO HÀNG COD TOÀN QUỐC</h3>
+						</div>
+						<div class='contact-container'>
+							<h3>LIÊN HỆ</h3>
+						</div>
+						<div class='shipping-info'>
+							<span>Hiện tại shop hỗ trợ ship cod trên toàn quốc, sau khi đặt hàng shop sẽ gọi cho bạn để xác nhận.</span>
+							<span>Shop hiện tại chỉ bán hàng online nên bạn có thể gọi cho shop hoặc nhắn tin qua fanpage để đuợc hỗ trợ thêm.</span>
+						</div>
+						<div class='contact-info'>
+							<div class='location'><span>Địa chỉ: xxx/xxx XXX, P.XXX, Q.XXX, Tp. Hồ Chí Minh.</span></div>
+							<div class='phone'><span>Điện thoại: 090xxxxxxxxx.</span></div>
+							<div class='email'><span>Email: email@nhatamgiac.com</span></div>
+						</div>
+					</div>
+				</section>
+
+				<section class='footer-section'>
+					<div class='wrapper'>
+						<div class='logo-container'></div>
+						<div class='social-media-container'>
+							<div class='facebook'><a href="https://www.facebook.com/nhatamgiac/"></a></div>
+							<div class='instagram'><a href=""></a></div>
+							<div class='gmail'><a href=""></a></div>
+						</div>
+					</div>
+				</section>
+		</div>
+		<script src="{{url_for('static',filename='scripts/index-initialize.js')}}" charset="utf-8"></script>
+		<script charset="utf-8">
+        	luxy.init();
+    	</script>
+	</body>
+</html>
