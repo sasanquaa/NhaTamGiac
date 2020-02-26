@@ -981,7 +981,7 @@ cloth
 				display: inline-block;
 				height: 650px;
 				vertical-align: top;
-				
+				margin-left: 10px;
 				p {
 					font-family: Roboto;
 				}
@@ -1003,9 +1003,37 @@ cloth
 					}
 				}
 
-				.info {
-					width: inherit;
+				.side-contact {
+					display: inline-block;
+					width: 18%;
+					margin-left: 5px;
 					height: 200px;
+					
+					.side-contact-paddable {
+						padding: 10px 0 10px 10px;
+						width: 100%;
+						height: 100%;
+
+						.side-contact-content {
+							width: inherit;
+							height: inherit;
+							border: 1px solid #c7c2d1;
+
+							p {
+								margin: 0;
+							}
+						}
+					}
+
+				}
+
+				@width-percentage: 80%;
+
+				.info {
+					width: @width-percentage;
+					display: inline-block;
+					height: 200px;
+					vertical-align: top;
 					border-bottom: 1px solid #c7c2d1;
 
 					.info-text {
@@ -1056,7 +1084,7 @@ cloth
 				}
 
 				.price {
-					width: inherit;
+					width: @width-percentage;
 					height: 80px;
 					border-bottom: 1px solid #c7c2d1;
 
@@ -1075,43 +1103,103 @@ cloth
 					}
 				}
 
-				.buy {
+				.sypnosis {
+
+					width: @width-percentage;
+					padding: 10px 0;
+					border-bottom: 1px solid #c7c2d1;
+					
 					p {
+						padding: 0 0 0 20px;
+						position: relative;
+						font-size: 14px;
+						margin: 0;
+						font-family: 'Segoe UI', 'Roboto';
+						margin: 0 0 5px;
+					}
+
+					p::before {
+						content: "";
+						width: 5px;
+						height: 5px;
+						border-radius: 50%;
+						background-color: #6d6d6d;	
+						position: absolute;
+						left: 0;
+						top: 6px;
+					}
+
+				}
+
+				.buy {
+
+					width: @width-percentage;
+
+					span {
 						font-weight: 300;
 						color: #fafcff;
 						text-align: center;
 						font-size: 22px;
 						margin: 0;
-						padding-top: 8px;
+						line-height: 1;
+						font-family: 'Segoe UI', 'Roboto';
 					}
-					width: inherit;
-					height: 266px;
-					border-bottom: 1px solid #c7c2d1;
+					padding: 10px 0;
 
-					.buy-now-paddable {
+					.quantity {
 						display: inline-block;
-						height: 100%;
+						width: 160px;
 						vertical-align: top;
-						padding: 110px 0px;
-						padding-left: 250px;
-						.buy-now {
+
+						.quantity-label {
+							line-height: 0.4;
+							color: gray;
+							font-family: 'Segoe UI', 'Roboto';
+							margin: 0;
+							font-size: 15px;
+						}
+
+						.quantity-plus {
+							border: 1px solid #dbdad5;
+							display: inline-block;
+							width: 30px;
+							height: 30px;
+							margin-top: 9px;
+							float: left;
+							background-color: white;
+						}
+
+						.quantity-minus {
+							.quantity-plus();
+						}
+
+						.quantity-input {
+							float: left;
+							display: inline-block;
+							text-align: center;
+							height: 30px;
+							width: 35px;
+							margin-top: 9px;
+
+							&::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+								-webkit-appearance: none;
+							}
+						}
+					}
+
+					.buy-add-box-paddable {
+						display: inline-block;
+						vertical-align: top;
+						//padding-left: 250px;
+						.box-button {
+							border: none;
 							height: 45px;
 							width: 150px;
-							background-color: #29b474;
+							background-color: #ff3945;
 							border-radius: 5px;
-
 						}
 					}
 										
-					.add-to-batch-paddable {
-						.buy-now-paddable();
-						padding-left: 0px;
-						.add-to-batch {
-							.buy-now-paddable.buy-now();
-							background-color: #f0a55b;
-						}
-
-					}
 					
 				}
 
@@ -1123,12 +1211,35 @@ cloth
 		.description-container {
 			min-height: 600px;
 			width: inherit;
+
 			h3 {
 				font-family: 'Roboto';
 				font-weight: 400;
 				color:#46444a;
 				margin: 0;
 				font-size: 26px;
+				display: inline-block;
+			}
+
+			p {
+				font-family: 'Segoe UI', 'Roboto';
+			}
+
+			.description-div {
+				padding-top: 25px;
+				padding-bottom: 40px;
+				width: inherit;
+				height: inherit;
+				font-family: 'Roboto';
+			}
+
+			.description-edit-button {
+				font-family: 'Roboto';
+				font-weight: 400;
+				font-size: 20px;
+				float: right;
+				color: #46444a;
+				display: inline-block;
 			}
 
 			.tinymce-form {
@@ -1140,12 +1251,6 @@ cloth
 				.tinymce-area {
 					width: inherit;
 					height: inherit;
-				}
-				
-				.tinymce-div {
-					width: inherit;
-					height: inherit;
-					display: none;
 				}
 
 				input {

@@ -1,0 +1,7 @@
+{
+	"pName": "Pink Hoodie",
+	"pBrand": "Brand 3",
+	"pStatus": true,
+	"pPrice": 350000.0,
+	"pSize": ["L","XL"]
+}

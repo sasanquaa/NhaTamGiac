@@ -19,8 +19,10 @@
 
 		<script type='text/javascript'>
 			var ROOT = {{ request.script_root|tojson|safe }};
-			var PRODUCT_JSON = {{PRODUCT_JSON|tojson|safe}};
-
+			var slide_count = {{product.pImagesCount}};
+			function numberWithDots(x) {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+			}
 		</script>
 	</head>
 	<body>
@@ -60,8 +62,13 @@
 							<div class='nav-choice-text'>
 								<a href='#'>Hướng dẫn mua hàng</a>
 							</div>
+							{% if not current_user.is_authenticated %}
+							<div class='nav-choice-text'>
+								<a href='/login'>Đăng nhập</a>
+							</div>
+							{% endif %}
 							{% if current_user.is_authenticated %}
-								{% if current_user.permission == 'admin' %}
+								{% if current_user.uPermission == 'admin' %}
 									<div class='nav-choice-text'>
 										<a href='{{ url_for("products.new_product") }}'>Tạo sản phẩm mới</a>
 									</div>
@@ -79,7 +86,7 @@
 				<div class='direction-bar'>
 					<div class='wrapper'>
 						<div class='direction-text'>
-							<p id='direction-route'>Trang chủ > {{PRODUCT_NAME}}</p>
+							<p id='direction-route'>Trang chủ > {{product.pName}}</p>
 						</div>
 
 						{% if current_user.is_authenticated %}
@@ -99,43 +106,47 @@
 							<div class='info-image-container'>
 								<div class='info-image-paddable'>
 									<div class='info-image'>
-										<img src="{{url_for('static',filename='images/hoodie.jpeg')}}">
-										<img src="{{url_for('static',filename='images/hoodie2.jpeg')}}">
-										<img src="{{url_for('static',filename='images/hoodie3.jpeg')}}">
-
+										{% for img in product.pImages %}
+										<img src="/{{img}}">
+										{% endfor %}
 									</div>
 								</div>
 								<div class='info-images-scroll'>
+									{% for img in product.pImages %}
 									<div class='scroll-image'>
-										<img src="{{url_for('static',filename='images/hoodie.jpeg')}}">
+										<img src="/{{img}}">
 									</div>
-									<div class='scroll-image'>
-										<img src="{{url_for('static',filename='images/hoodie2.jpeg')}}">
-									</div>
-									<div class='scroll-image'>
-										<img src="{{url_for('static',filename='images/hoodie3.jpeg')}}">
-									</div>
-
-
+									{% endfor %}
 								</div>
 							</div>
 							<div class='info-description-container'>
 
 
 								<div class='title'>
-									<h3 id='product-title'></h3>
+
+									<h3 id='product-title'>{{product.pName}}</h3>
 								</div>
 								<div class='info'>
 									<div class='brand'>
-										<div class='info-text'>Thương hiệu: <p id='product-brand' style='color: #16849b;display: inline-block;margin: 0;'></p></div>
+										<div class='info-text'>Thương hiệu: <p id='product-brand' style='color: #16849b;display: inline-block;margin: 0;'>{{product.pBrand}}</p></div>
 									</div>
 									<div class='status'>
-										<div class='info-text'>Tình trạng: <p id='product-status' style='color: green;display: inline-block;margin: 0;'></p></div>
+										<div class='info-text'>Tình trạng: <p id='product-status' style='color: green;display: inline-block;margin: 0;'>{{product.pStatus}}</p></div>
 									</div>
 									<div class='size'>
 										<div class='info-text'>Kích thước: 
 											<ul id='product-size'>
+											{% for size in product.pSize %}
+												<li>{{size}}</li>
+											{% endfor %}
 											</ul>
+										</div>
+									</div>
+								</div>
+								<div class='side-contact'>
+									<div class='side-contact-paddable'>
+										<div class='side-contact-content'>
+											<p>Liên hệ</p>
 										</div>
 									</div>
 								</div>
@@ -143,18 +154,34 @@
 									<div  class='price-text'>
 										GIÁ SẢN PHẨM
 									</div>
-									<p id='product-price'></p>
+									<p id='product-price'>{{product.pPrice}} VNĐ</p>
+								</div>
+								<div class='sypnosis'>
+										<p>
+											This class of status codes indicates the action requested by the client was received, understood, accepted.
+										</p>
+										<p>
+											The request has been accepted for processing, but the processing has not been completed. The request might or might not be eventually acted upon.
+										</p>
+										<p>
+											The server successfuly processed the request and is not returning any content.
+										</p>
 								</div>
 								<div class='buy'>
-									<div class='buy-now-paddable'>
-										<div class='buy-now'>
-											<p>Mua ngay</p>
-										</div>
+									<div class='quantity'>
+										<p class='quantity-label'>Số lượng:</p>
+										<button type='button' class='quantity-plus'>+</button>
+										<input type='number' value=1 min=1 max=100 class='quantity-input'>
+										<button type='button' class='quantity-minus'>-</button>
+										<!--<input class='quantity-input' type='number' value='1' step='1' min='1' max='100'>-->
 									</div>
-									<div class='add-to-batch-paddable'>
-										<div class='add-to-batch'>
-											<p>Thêm vào giỏ</p>
-										</div>
+									<div class='buy-add-box-paddable'>
+										<button class='box-button'>
+											<span>Mua ngay</span>
+										</button>
+										<button class='box-button'>
+											<span>Thêm vào giỏ</span>
+										</button>
 									</div>
 								</div>
 							</div>
@@ -163,16 +190,21 @@
 
 						<div class='description-container'>
 							<h3>Mô tả sản phẩm</h3>
-							<form class='tinymce-form' method='post'>
-								<textarea id='product-description' class='tinymce-area'>
-									Hello, World !
-								</textarea>
-								</br>
-								<input type="submit" value="Đăng bài">
-							
-								<div class='tinymce-div'>
-								</div>
-							</form>
+							{% if current_user.is_authenticated%}
+								{% if current_user.uPermission == 'admin' %}
+								<button onclick='editButton()' class='description-edit-button'> Sửa</button>
+								<form class='tinymce-form' style='display: none;'>
+									<textarea id='product-description' class='tinymce-area'>
+										{{product.pDescription}}
+									</textarea>
+									</br>
+									<input type="submit" value="Đăng bài">
+								</form>
+								{% endif %}
+							{% endif %}
+							<div class='description-div'>
+								{{product.pDescription}}
+							</div>
 						</div>
 
 						<div class='product-rating'>
@@ -226,39 +258,46 @@
 				</section>
 		</div>
 		{% if current_user.is_authenticated %}
-			{% if current_user.permission == 'admin' %}
+			{% if current_user.uPermission == 'admin' %}
 				<script>
+					var update_url = '/update_setting' + '?pID=' + '{{product.pID}}';
 					$('#product-title').editable({
 						type: 'text',
-						url: ROOT + '/save_description',
+						url: ROOT + update_url,
 						ajaxOptions: {
 							type: 'put'
 						},
 						pk: 1,
 						title: 'Đổi tên sản phẩm',
-						value: PRODUCT_JSON.info.title
+						value: '{{product.pName}}',
+						error: function(res, error_v) {
+							var prev_v = $(this).text();
+							$(this).html("<span style='color: #e82c2c'>Tên bị đã trùng</span>");
+							console.log(prev_v)
+						}
 					});
 					$('#product-brand').editable({
 						type: 'text',
 						ajaxOptions: {
 							type: 'put'
 						},
-						url: ROOT + '/save_description',
-						pk: 1,
+						url: ROOT + update_url,
+						pk: 2,
 						title: 'Đổi thương hiệu sản phẩm',
-						value: PRODUCT_JSON.info.brand
+						value: '{{product.pBrand}}'
 					});
 					$('#product-status').editable({
 						type: 'select',
 						ajaxOptions: {
 							type: 'put'
 						},
-						url: ROOT + '/save_description',
-						pk: 1,
+						url: ROOT + update_url,
+						pk: 3,
 						title: 'Đổi tình trạng sản phẩm',
+						value: '{{product.pStatus}}',
 						source: [
-							{value: 1, text: 'Còn hàng'},
-							{value: 2, text: 'Hết hàng'}
+							{value: 'Còn hàng', text: 'Còn hàng'},
+							{value: 'Hết hàng', text: 'Hết hàng'}
 						]
 					});
 					$('#product-size').editable({
@@ -280,16 +319,16 @@
 						ajaxOptions: {
 							type: 'put'
 						},
-						url: ROOT + '/save_description',
-						pk: 1,
+						url: ROOT + update_url,
+						pk: 4,
 						title: 'Đổi size sản phẩm',
-						value: [1],
+						value: {{product.pSize|safe}},
 						source: [
-							{value: 1, text: 'S'},
-							{value: 2, text: 'M'},
-							{value: 3, text: 'L'},
-							{value: 4, text: 'XL'},
-							{value: 5, text: 'XXL'}
+							{value: 'S', text: 'S'},
+							{value: 'M', text: 'M'},
+							{value: 'L', text: 'L'},
+							{value: 'XL', text: 'XL'},
+							{value: 'XXL', text: 'XXL'}
 						]
 					});
 					$('#product-price').editable({
@@ -297,10 +336,10 @@
 						ajaxOptions: {
 							type: 'put'
 						},
-						url: ROOT + '/save_description',
-						pk: 1,
+						url: ROOT + update_url,
+						pk: 5,
 						title: 'Đổi giá sản phẩm',
-						value: PRODUCT_JSON.info.price
+						value: '{{product.pPrice}} VNĐ'
 					});
 				</script>
 			{% endif %}

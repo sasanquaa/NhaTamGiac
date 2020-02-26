@@ -9,7 +9,7 @@ auth_bp = Blueprint('auth',__name__)
 def login():
     if current_user.is_authenticated:
         user = current_user
-        print(" - ".join([str(user.id), user.name, user.email, user.password, user.permission]))
+        print(" - ".join([str(user.uID), user.uName, user.uEmail, user.uPassword, user.uPermission]))
         return redirect(url_for('main.index'))
     return render_template('shop_login.html')
 
@@ -18,10 +18,10 @@ def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(uEmail=email).first()
 
     if user is not None:
-        if not check_password_hash(user.password, password):
+        if not check_password_hash(user.uPassword, password):
             flash('Thông tin sai hoặc tài khoản không tồn tại')
             return redirect(url_for('auth.login'))
         else:
@@ -43,14 +43,14 @@ def signup_post():
     permission = 'user'
     
     for user in User.query.filter().all():
-        print(" - ".join([str(user.id), user.name, user.email, user.password, user.permission]))
-    user = User.query.filter_by(email=email).first()
+        print(" - ".join([str(user.uID), user.uName, user.uEmail, user.uPassword, user.uPermission]))
+    user = User.query.filter_by(uEmail=uEmail).first()
 
     if user:
         flash('Email đã có người sử dụng')
         return redirect(url_for('auth.login'))
 
-    new_user = User(email=email, name=name, password=generate_password_hash(password, salt_length=16), permission=permission)
+    new_user = User(uEmail=email, uName=name, uPassword=generate_password_hash(password, salt_length=16), uPermission=permission)
 
     db.session.add(new_user)
     db.session.commit()

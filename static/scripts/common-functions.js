@@ -1,4 +1,4 @@
-function sendAjaxJSON(url,data,success=function(res){},error=function(res){}) {
+function postAjaxJSON(url,data,success=function(res){},error=function(res){}) {
 	$.ajax({
 		url: ROOT + url,
 		type: 'POST',
@@ -23,67 +23,46 @@ function getAjaxJSON(url,success=function(res){},error=function(res){}) {
 /*
  * @param {type} name For tinyMCE
 */
-function saveProduct(name) {
-	var product = PRODUCT_JSON;
+function updateDescriptionSetting(name) {
+	var button = $('.description-edit-button'); 
 	var form = tinyMCE.get(name);
 	var formParent = $('.tinymce-form');
 	form.setProgressState(1);
-	sendAjaxJSON('/save_description',
-		{'content' : form.getContent()},
+	postAjaxJSON('/update_setting',
+		{
+			'pk': 6,
+			'value' : form.getContent()
+		},
 		function(res) {
 			form.setProgressState(0);
-			form.remove();
-			formParent.children().get(0).remove();
-			formParent.children().get(0).remove();
-			formParent.children().get(0).remove();
-			var div = $(formParent.children().get(0));
+			formParent.css({
+				'display': 'none'
+			});
+			button.css({
+				'display': 'block'
+			});
+			var div = $('.description-div');
 			div.css({
 				'display': 'block'
 			});
-			div.html(res.content);
-		},
-		function(result) {
-		
+			div.html(res.pDescription);
 		}
 	);
 
 }
 
-/*
- * @param {type} name For tinyMCE
-*/
-function loadProduct(name) {
-	var product = PRODUCT_JSON;
-	var title = $($('.title').children().get(0));
-	var brand = $($($('.brand').children().get(0)).children().get(0));
-	var status = $($($('.status').children().get(0)).children().get(0));
-	var size = $($($('.size').children().get(0)).children().get(0));
-	var price = $($('.price').children().get(1));
-	var form = tinyMCE.get(name);
+function editButton() {
+	var div = $('.description-div');
+	var button = $('.description-edit-button'); 
 	var formParent = $('.tinymce-form');
-	
-	var productInfo = product.info;
-	var productImages = product.images;
-	var productDescription = product.des;
-
-	title.html(productInfo.title);
-	brand.html(productInfo.brand);
-	status.html(productInfo.status);
-	price.html(productInfo.price);
-
-	for(i = 0; i < productInfo.size.length; i++) {
-		size.append('<li>' + productInfo.size[i] +'</li>');
-	}
-
-	if(product.des == '') return;
-	form.remove();
-	formParent.children().get(0).remove();
-	formParent.children().get(0).remove();
-	formParent.children().get(0).remove();
-	var div = $(formParent.children().get(0));
-	div.css({
+	formParent.css({
 		'display': 'block'
 	});
-	div.html(productDescription);
+	button.css({
+		'display': 'none'
+	});
+	div.css({
+		'display': 'none'
+	});
 }
 

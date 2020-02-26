@@ -52,6 +52,11 @@
 							<div class='nav-choice-text'>
 								<a href='#'>Hướng dẫn mua hàng</a>
 							</div>
+							{% if not current_user.is_authenticated %}
+							<div class='nav-choice-text'>
+								<a href='/login'>Đăng nhập</a>
+							</div>
+							{% endif %}
 							{% if current_user.is_authenticated %}
 								{% if current_user.permission == 'admin' %}
 									<div class='nav-choice-text'>

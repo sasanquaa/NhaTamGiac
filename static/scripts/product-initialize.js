@@ -5,17 +5,20 @@ $(function() {
 		$('.info-image').slick({
 			slidesToShow: 1,
 			slidesToScroll: 1,
+			asNavFor: '.info-images-scroll',
 			arrows: false,
-			fade: true,
+			fade: true
 		});
 
 		$('.info-images-scroll').slick({
-			slidesToShow: 3,
+			slidesToShow: 1,
 			slidesToScroll: 1,
 			asNavFor: '.info-image',
 			centerMode: true,
 			focusOnSelect: true,
-			arrows: false
+			arrows: false,
+			variableWidth: true,
+			infinite: true
 		});
 
 	}, 300);
@@ -36,14 +39,14 @@ $(function() {
 
 	$('.tinymce-form').submit(function(e) {
 		e.preventDefault();
-		saveProduct('product-description');
+		updateDescriptionSetting('product-description');
 	});
 
 	//X-editable & Poshytip
 	$.fn.editableform.buttons = "<button type=\"submit\" class=\"editable-submit\"></button><button type=\"button\" class=\"editable-cancel\"></button>"
 
 	//Responsive
-	loadProduct('product-description');
+	//loadProduct('product-description');
 
 
 });
