@@ -1,8 +1,10 @@
 IN-PROGRESS
 + Add commit setting function
 + Add update setting for bullet list
-+ Update product layout
-+ Add quantity button woocomerce bootstrap or sth
++ Add rating / comments on product
+
 
 FINISHED
 + Refactor product_wrapper to use SQLAlchemy
++ Update product layout
++ Add quantity button woocomerce bootstrap or sth (partially)

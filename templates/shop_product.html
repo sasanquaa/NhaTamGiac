@@ -14,9 +14,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/poshytip/1.2/jquery.poshytip.min.js"></script>
 		<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
+		<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 		<script src="{{url_for('static',filename='scripts/common-functions.js')}}" charset="utf-8"></script>
-		<script src="{{url_for('static',filename='scripts/product-initialize.js')}}" charset="utf-8"></script>
-
 		<script type='text/javascript'>
 			var ROOT = {{ request.script_root|tojson|safe }};
 			var slide_count = {{product.pImagesCount}};
@@ -44,6 +43,10 @@
 						<div class='search-glass'>
 						</div>
 						<div class='checkout-cart'>
+							<a class='cart-label'>
+							   	Giỏ hàng 
+								<span class='cart-count'>0</span>
+							</a>
 						</div>
 					</div>
 				</header>
@@ -128,25 +131,26 @@
 								</div>
 								<div class='info'>
 									<div class='brand'>
-										<div class='info-text'>Thương hiệu: <p id='product-brand' style='color: #16849b;display: inline-block;margin: 0;'>{{product.pBrand}}</p></div>
+										<div class='info-text'>Thương hiệu: <p id='product-brand' style='color: #0f93f2;display: inline-block;margin: 0;'>{{product.pBrand}}</p></div>
 									</div>
 									<div class='status'>
 										<div class='info-text'>Tình trạng: <p id='product-status' style='color: green;display: inline-block;margin: 0;'>{{product.pStatus}}</p></div>
 									</div>
 									<div class='size'>
 										<div class='info-text'>Kích thước: 
-											<ul id='product-size'>
+											<div id='product-size'>
 											{% for size in product.pSize %}
-												<li>{{size}}</li>
+												<a href='#'>{{size}}</a>
 											{% endfor %}
-											</ul>
+											</div>
 										</div>
 									</div>
 								</div>
 								<div class='side-contact'>
 									<div class='side-contact-paddable'>
 										<div class='side-contact-content'>
-											<p>Liên hệ</p>
+											<div class='support'><span>Hỗ trợ</span></div>
+											<div class='messenger'></div>
 										</div>
 									</div>
 								</div>
@@ -166,13 +170,14 @@
 										<p>
 											The server successfuly processed the request and is not returning any content.
 										</p>
+
 								</div>
 								<div class='buy'>
 									<div class='quantity'>
 										<p class='quantity-label'>Số lượng:</p>
-										<button type='button' class='quantity-plus'>+</button>
+										<button type='button' class='quantity-plus'></button>
 										<input type='number' value=1 min=1 max=100 class='quantity-input'>
-										<button type='button' class='quantity-minus'>-</button>
+										<button type='button' class='quantity-minus'></button>
 										<!--<input class='quantity-input' type='number' value='1' step='1' min='1' max='100'>-->
 									</div>
 									<div class='buy-add-box-paddable'>
@@ -183,19 +188,22 @@
 											<span>Thêm vào giỏ</span>
 										</button>
 									</div>
+									<a href='#' class='favorite-container'>
+										<!--<a href='javascript:'></a>-->
+									</a>
 								</div>
 							</div>
 							
 						</div>
 
-						<div class='description-container'>
-							<h3>Mô tả sản phẩm</h3>
+						<fieldset class='description-container'>
+							<legend>Mô tả sản phẩm</legend>
 							{% if current_user.is_authenticated%}
 								{% if current_user.uPermission == 'admin' %}
 								<button onclick='editButton()' class='description-edit-button'> Sửa</button>
 								<form class='tinymce-form' style='display: none;'>
 									<textarea id='product-description' class='tinymce-area'>
-										{{product.pDescription}}
+										{{product.pDescription|safe}}
 									</textarea>
 									</br>
 									<input type="submit" value="Đăng bài">
@@ -203,11 +211,84 @@
 								{% endif %}
 							{% endif %}
 							<div class='description-div'>
-								{{product.pDescription}}
+								{{product.pDescription|safe}}
 							</div>
-						</div>
+						</fieldset>
 
 						<div class='product-rating'>
+							<h3>
+								Đánh giá sản phẩm
+							</h3>
+
+							<div class='rating-stats'>
+								<div class='overall-rating'>
+									<h3 class='overall-rating-label'>
+										Đánh giá trung bình
+									</h3>
+									<p class='overall-rating-points'>
+										5/5
+									</p>
+									<div class='star-container'>
+										<span class='star'></span>
+										<span class='star'></span>
+										<span class='star'></span>
+										<span class='star'></span>
+										<span class='star'></span>
+									</div>
+									<p class='comments-count'>
+										({{product.pCommentsCount}} nhận xét )
+									</p>
+
+								</div>
+
+								<div class='rating-bars'>
+									<div class='stars'>
+										<span class='stars-num'>
+											5
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											4
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											3
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											2
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											1 
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+								</div>
+
+								<div class='add-comment'>
+									<h3> Chia sẻ nhận xét của bạn</h3>
+									<button>Viết nhận xét về sản phẩm</button>
+								</div>
+							</div>
 						</div>
 
 						<div class='product-ads'>
@@ -260,6 +341,31 @@
 		{% if current_user.is_authenticated %}
 			{% if current_user.uPermission == 'admin' %}
 				<script>
+
+					//TinyMCE
+					tinymce.init({
+								selector: '.tinymce-area',
+								mode: 'textareas',
+								height: 600,
+								plugins: [
+								'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+								'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+								'table emoticons template paste help'
+								],
+								language: 'vi',
+								toolbar: 'undo redo | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent'
+					});
+
+					$('.tinymce-form').submit(function(e) {
+						e.preventDefault();
+						updateDescriptionSetting('product-description');
+					});
+
+
+					$.fn.editableform.buttons = "<button type=\"submit\" class=\"editable-submit\"></button><button type=\"button\" class=\"editable-cancel\"></button>"
+
+
+
 					var update_url = '/update_setting' + '?pID=' + '{{product.pID}}';
 					$('#product-title').editable({
 						type: 'text',
@@ -344,7 +450,7 @@
 				</script>
 			{% endif %}
 		{% endif %}
-		<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<script src="{{url_for('static',filename='scripts/product-initialize.js')}}" charset="utf-8"></script>
 		<script charset="utf-8">
         	luxy.init();
     	</script>

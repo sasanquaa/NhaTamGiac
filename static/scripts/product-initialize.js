@@ -23,30 +23,33 @@ $(function() {
 
 	}, 300);
 
-	//TinyMCE
-	tinymce.init({
-				selector: '.tinymce-area',
-				mode: 'textareas',
-				height: 600,
-				plugins: [
-				'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-				'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-				'table emoticons template paste help'
-				],
-				language: 'vi',
-				toolbar: 'undo redo | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent'
+
+	var qtyPlus = $('.quantity-plus');
+	var qtyMinus = $('.quantity-minus');
+	var qtyInput = $('.quantity-input');
+	var max = parseInt(qtyInput.attr('max'));
+	var min = parseInt(qtyInput.attr('min'));
+	
+	qtyPlus.click(function(e) {
+		var q = parseInt(qtyInput.val());
+		if(q + 1 <= 100) qtyInput.val(q + 1); 	
 	});
 
-	$('.tinymce-form').submit(function(e) {
-		e.preventDefault();
-		updateDescriptionSetting('product-description');
+
+	qtyMinus.click(function(e) {
+		var q = parseInt(qtyInput.val());
+		if(q - 1 >= 1) qtyInput.val(q - 1);
 	});
 
-	//X-editable & Poshytip
-	$.fn.editableform.buttons = "<button type=\"submit\" class=\"editable-submit\"></button><button type=\"button\" class=\"editable-cancel\"></button>"
+	qtyInput.keyup(function(e) {
+		if(e.key.match(/[+-.,]/g)) {
+			console.log(qtyInput.val());
+			return;
+		}
 
-	//Responsive
-	//loadProduct('product-description');
-
-
+		var q = parseInt(qtyInput.val())
+		if(q > 100) qtyInput.val(100);
+		if(q < 1) qtyInput.val(1);
+	});
+	
 });
