@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nhà Tam Giác - Homewear</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">         
+    	<link rel="stylesheet/less" type="text/css" href="{{url_for('static',filename='style.less')}}" /> 
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>   
+    	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script> 
+		<script src="{{url_for('static',filename='scripts/luxy.js')}}" charset="utf-8"></script>
+
+		<script type='text/javascript'>
+		</script>
+	</head>
+	<body>
+		<div class='login-background'>
+		</div>
+		<div class='contents-wrapper'>
+			<section class='form-section'>
+				<div class='wrapper'>
+					<div class='form-container'>
+						<form class='form' action='/login' method='post'>
+							<div class='logo'>
+							</div>
+							<br><br>
+							<p>Đăng nhập</p>
+							<br>
+							
+							{% if messages.length != 0 %}
+								<div class='alert'>
+									{{ messages[0] }}
+								</div>
+							{% endif %}
+
+							<div class='input'>
+								<input class='email' name='email' type="text" placeholder='Địa chỉ Email'>
+								<br><br>
+								<input class='password' name='password' type="password" placeholder='Mật khẩu'>
+								<br><br>
+								<br>
+								<input class='submit' type="submit" value="Đăng nhập">
+								<br><br>
+								<a class='signup' href='/signup'>Đăng ký tài khoản</a>
+								<br><br>
+								<a href='/'>Trang chủ</a>
+								<a>  -  </a>
+								<a>Quên mật khẩu</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</body>
+</html>

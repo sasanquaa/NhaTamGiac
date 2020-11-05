@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nhà Tam Giác - Homewear</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">         
+    	<link rel="stylesheet/less" type="text/css" href="{{url_for('static',filename='style.less')}}" /> 
+    	<link rel="stylesheet/less" type="text/css" href="{{url_for('static',filename='slick.less')}}" /> 		 
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>   
+    	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script> 
+		<script src="{{url_for('static',filename='scripts/luxy.js')}}" charset="utf-8"></script>
+		<script src="{{url_for('static',filename='scripts/jquery.easing.1.3.js')}}" charset="utf-8"></script>
+		<script src="{{url_for('static',filename='scripts/tinymce/tinymce.min.js')}}" charset="utf-8"></script>
+    	<link rel="stylesheet" href="{{url_for('static',filename='tip-yellowsimple/tip-yellowsimple.css')}}" /> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/poshytip/1.2/jquery.poshytip.min.js"></script>
+		<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
+		<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<script src="{{url_for('static',filename='scripts/common-functions.js')}}" charset="utf-8"></script>
+		<script type='text/javascript'>
+			var slide_count = {{product.images.length}};
+			function numberWithDots(x) {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+			}
+		</script>
+	</head>
+	<body>
+		<div class='contents-wrapper'>
+
+			<div id='luxy'>
+
+				<header class='search-bar'>
+					<div class='search-bar-container'>
+						<div class='logo-container'>
+							<img src="{{url_for('static',filename='images/logo.png')}}">
+						</div>
+						<div class='title-container'>
+							<p>Nhà Tam Giác</p>
+						</div>
+						<div class='search-box'>
+							<input type='text' placeholder='Tìm kiếm sản phẩm...'>
+						</div>
+						<div class='search-glass'>
+						</div>
+						<div class='checkout-cart'>
+							<a class='cart-label' href='/payment'>
+							   	Giỏ hàng 
+								<span class='cart-count'>{{cart_count}}</span>
+							</a>
+						</div>
+					</div>
+				</header>
+				<header class='navigation-bar'>
+					<div class='nav-bar-container'>
+						<div class='nav-choice-container'>
+
+							<div class='nav-choice-text'>
+								<a href='/'>Trang chủ</a>
+							</div>
+							<div class='nav-choice-text'>
+								<a href='/contact'>Liên hệ</a>
+							</div>
+							<div class='nav-choice-text'>
+								<a href='/report'>Báo cáo</a>
+							</div>
+							<div class='nav-choice-text'>
+								<a href='/help'>Hướng dẫn mua hàng</a>
+							</div>
+
+							{% if current_user == null %}
+							<div class='nav-choice-text'>
+								<a href='/login'>Đăng nhập</a>
+							</div>
+							{% endif %}
+							
+							{% if current_user != null %}
+								{% if current_user.permission[0] == 'admin' %}
+									<div class='nav-choice-text'>
+										<a href=''>Tạo sản phẩm mới</a>
+								</div>
+							{% endif %}
+							{% endif %}
+
+
+							{% if current_user != null %}
+							<div class='nav-choice-text'>
+								<a href='/logout'>Đăng xuất</a>
+							</div>
+							{% endif %}
+
+						</div>
+					</div>
+				</header>
+
+				<div class='direction-bar'>
+					<div class='wrapper'>
+						<div class='direction-text'>
+							<p id='direction-route'>Trang chủ > {{product.name}}</p>
+						</div>
+
+						{% if current_user.is_authenticated %}
+							{% if current_user.permission[0] == 'admin' %}
+								<form action='/products/new_product' class='product-submit-container'>
+									<button type='submit' class='save-product'></button>
+									<button type='submit' class='delete-product'></button>
+								</form>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+
+				<section class='product-info-section'>
+					<div class='wrapper'>
+						<div class='info-container'>
+							<div class='info-image-container'>
+								<div class='info-image-paddable'>
+									<div class='info-image'>
+										{% for img in product.images %}
+										<img src="/product/{{product_id}}/img/{{loop.index}}">
+										{% endfor %}
+									</div>
+								</div>
+								<div class='info-images-scroll'>
+									{% for img in product.images %}
+									<div class='scroll-image'>
+										<img src="/product/{{product_id}}/img/{{loop.index}}">
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class='info-description-container'>
+
+
+								<div class='title'>
+
+									<h3 id='product-title'>{{product.name}}</h3>
+								</div>
+								<div class='info'>
+									<div class='brand'>
+										<div class='info-text'>Thương hiệu: <p id='product-brand' style='color: #0f93f2;display: inline-block;margin: 0;'>{{product.brand}}</p></div>
+									</div>
+									<div class='status'>
+										<div class='info-text'>Tình trạng: <p id='product-status' style='color: green;display: inline-block;margin: 0;'>{{'Còn hàng' if product.avail else 'Hết hàng'}}</p></div>
+									</div>
+									{% if product.type == 'clothes' %}
+									<div class='size'>
+										<div class='info-text'>Kích thước: 
+											<div id='product-size'>
+											{% for size in product.size %}
+												<a href='#'>{{size}}</a>
+											{% endfor %}
+											</div>
+										</div>
+									</div>
+									{% endif %}
+
+									{% if product.type == 'game' or product.type == 'book' %}
+									<div class='release'>
+										<div class='info-text'> 
+											Ngày phát hành: Ngày {{product.release.getDate()}} Tháng {{product.release.getMonth()}} Năm {{product.release.getFullYear()}}
+										</div>
+									</div>
+									{% endif %}
+
+								</div>
+								<div class='side-contact'>
+									<div class='side-contact-paddable'>
+										<div class='side-contact-content'>
+											<div class='support'><span>Hỗ trợ</span></div>
+											<div class='messenger'></div>
+										</div>
+									</div>
+								</div>
+								<div class='price'>
+									<div  class='price-text'>
+										GIÁ SẢN PHẨM
+									</div>
+									<p id='product-price'>{{product.price.toLocaleString().replace(r/,/g, '.')}} VNĐ</p>
+								</div>
+								<div class='sypnosis'>
+										<p>
+											This class of status codes indicates the action requested by the client was received, understood, accepted.
+										</p>
+										<p>
+											The request has been accepted for processing, but the processing has not been completed. The request might or might not be eventually acted upon.
+										</p>
+										<p>
+											The server successfuly processed the request and is not returning any content.
+										</p>
+
+								</div>
+								<div class='buy'>
+									<div class='quantity'>
+										<p class='quantity-label'>Số lượng:</p>
+										<button type='button' class='quantity-plus'></button>
+										<input type='number' value=1 min=1 max=100 class='quantity-input'>
+										<button type='button' class='quantity-minus'></button>
+										<!--<input class='quantity-input' type='number' value='1' step='1' min='1' max='100'>-->
+									</div>
+									<div class='buy-add-box-paddable'>
+										<button class='box-button' url='/product/add_to_cart/{{product._id}}'>
+											<span>Mua ngay</span>
+										</button>
+										<button id='add-button' class='box-button' url='/product/add_to_cart/{{product._id}}'>
+											<span>Thêm vào giỏ</span>
+										</button>
+									</div>
+									<a href='#' class='favorite-container'>
+										<!--<a href='javascript:'></a>-->
+									</a>
+								</div>
+							</div>
+							
+						</div>
+
+						<fieldset class='description-container'>
+							<legend>Mô tả sản phẩm</legend>
+							{% if current_user.is_authenticated%}
+								{% if current_user.uPermission == 'admin' %}
+								<button onclick='editButton()' class='description-edit-button'> Sửa</button>
+								<form class='tinymce-form' style='display: none;'>
+									<textarea id='product-description' class='tinymce-area'>
+										{{product.description|safe}}
+									</textarea>
+									</br>
+									<input type="submit" value="Đăng bài">
+								</form>
+								{% endif %}
+							{% endif %}
+							<div class='description-div'>
+								{{product.description|safe}}
+							</div>
+						</fieldset>
+
+						<div class='product-rating'>
+							<h3>
+								Đánh giá sản phẩm
+							</h3>
+
+							<div class='rating-stats'>
+								<div class='overall-rating'>
+									<h3 class='overall-rating-label'>
+										Đánh giá trung bình
+									</h3>
+									<p class='overall-rating-points'>
+										5/5
+									</p>
+									<div class='star-container'>
+										<span class='star'></span>
+										<span class='star'></span>
+										<span class='star'></span>
+										<span class='star'></span>
+										<span class='star'></span>
+									</div>
+									<p class='comments-count'>
+										({{product.pCommentsCount}} nhận xét )
+									</p>
+
+								</div>
+
+								<div class='rating-bars'>
+									<div class='stars'>
+										<span class='stars-num'>
+											5
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											4
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											3
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											2
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+									<div class='stars'>
+										<span class='stars-num'>
+											1 
+										</span>
+										<div class='progress-bar'>
+										</div>
+									</div>
+
+								</div>
+
+								<div class='add-comment'>
+									<h3> Chia sẻ nhận xét của bạn</h3>
+									<button>Viết nhận xét về sản phẩm</button>
+								</div>
+							</div>
+						</div>
+
+						<div class='product-ads'>
+							<div class='quality'>
+								Sản phẩm chất lượng cao
+							</div>
+							<div class='free'>
+								Miễn phí ship cho mặt hàng trên 500K
+							</div>
+							<div class='fast'>
+								Hàng về thường xuyên
+							</div>
+						</div>
+
+					</div>
+
+				</section>
+
+				<section class='contact-section'>
+					<div class='wrapper'>
+						<div class='shipping-container'>
+							<h3>GIAO HÀNG COD TOÀN QUỐC</h3>
+						</div>
+						<div class='contact-container'>
+							<h3>LIÊN HỆ</h3>
+						</div>
+						<div class='shipping-info'>
+							<span>Hiện tại shop hỗ trợ ship cod trên toàn quốc, sau khi đặt hàng shop sẽ gọi cho bạn để xác nhận.</span>
+							<span>Shop hiện tại chỉ bán hàng online nên bạn có thể gọi cho shop hoặc nhắn tin qua fanpage để đuợc hỗ trợ thêm.</span>
+						</div>
+						<div class='contact-info'>
+							<div class='location'><span>Địa chỉ: xxx/xxx XXX, P.XXX, Q.XXX, Tp. Hồ Chí Minh.</span></div>
+							<div class='phone'><span>Điện thoại: 090xxxxxxxxx.</span></div>
+							<div class='email'><span>Email: email@nhatamgiac.com</span></div>
+						</div>
+					</div>
+				</section>
+
+				<section class='footer-section'>
+					<div class='wrapper'>
+						<div class='logo-container'></div>
+						<div class='social-media-container'>
+							<div class='facebook'><a href="https://www.facebook.com/nhatamgiac/"></a></div>
+							<div class='instagram'><a href=""></a></div>
+							<div class='gmail'><a href=""></a></div>
+						</div>
+					</div>
+				</section>
+		</div>
+		{% if current_user.is_authenticated %}
+			{% if current_user.uPermission == 'admin' %}
+				<script>
+
+					//TinyMCE
+					tinymce.init({
+								selector: '.tinymce-area',
+								mode: 'textareas',
+								height: 600,
+								plugins: [
+								'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+								'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+								'table emoticons template paste help'
+								],
+								language: 'vi',
+								toolbar: 'undo redo | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent'
+					});
+
+					$('.tinymce-form').submit(function(e) {
+						e.preventDefault();
+						updateDescriptionSetting('product-description');
+					});
+
+
+					$.fn.editableform.buttons = "<button type=\"submit\" class=\"editable-submit\"></button><button type=\"button\" class=\"editable-cancel\"></button>"
+
+
+
+					var update_url = '/update_setting' + '?pID=' + '{{product.pID}}';
+					$('#product-title').editable({
+						type: 'text',
+						url: ROOT + update_url,
+						ajaxOptions: {
+							type: 'put'
+						},
+						pk: 1,
+						title: 'Đổi tên sản phẩm',
+						value: '{{product.pName}}',
+						error: function(res, error_v) {
+							var prev_v = $(this).text();
+							$(this).html("<span style='color: #e82c2c'>Tên bị đã trùng</span>");
+							console.log(prev_v)
+						}
+					});
+					$('#product-brand').editable({
+						type: 'text',
+						ajaxOptions: {
+							type: 'put'
+						},
+						url: ROOT + update_url,
+						pk: 2,
+						title: 'Đổi thương hiệu sản phẩm',
+						value: '{{product.pBrand}}'
+					});
+					$('#product-status').editable({
+						type: 'select',
+						ajaxOptions: {
+							type: 'put'
+						},
+						url: ROOT + update_url,
+						pk: 3,
+						title: 'Đổi tình trạng sản phẩm',
+						value: '{{product.pStatus}}',
+						source: [
+							{value: 'Còn hàng', text: 'Còn hàng'},
+							{value: 'Hết hàng', text: 'Hết hàng'}
+						]
+					});
+					$('#product-size').editable({
+						type: 'checklist',
+						display: function(value, sourceData) {
+						   var html = [],
+							   checked = $.fn.editableutils.itemsByValue(value, sourceData);
+
+						   if(checked.length) {
+							   $.each(checked, function(i, v) 
+							   {
+								   html.push('<li>' + v.text + '</li>'); 
+							   });
+							   $(this).html(html.join('\n'));
+						   } else {
+							   $(this).empty();
+						   }
+						},
+						ajaxOptions: {
+							type: 'put'
+						},
+						url: ROOT + update_url,
+						pk: 4,
+						title: 'Đổi size sản phẩm',
+						value: {{product.pSize|safe}},
+						source: [
+							{value: 'S', text: 'S'},
+							{value: 'M', text: 'M'},
+							{value: 'L', text: 'L'},
+							{value: 'XL', text: 'XL'},
+							{value: 'XXL', text: 'XXL'}
+						]
+					});
+					$('#product-price').editable({
+						type: 'text',
+						ajaxOptions: {
+							type: 'put'
+						},
+						url: ROOT + update_url,
+						pk: 5,
+						title: 'Đổi giá sản phẩm',
+						value: '{{product.pPrice}} VNĐ'
+					});
+				</script>
+			{% endif %}
+		{% endif %}
+		<script src="{{url_for('static',filename='scripts/product-initialize.js')}}" charset="utf-8"></script>
+		<script charset="utf-8">
+        	luxy.init();
+    	</script>
+	</body>
+</html>

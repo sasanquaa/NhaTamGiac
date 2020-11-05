@@ -1,0 +1,54 @@
+<div class="game_page_autocollapse" style="max-height: none;">
+	<div id="game_area_description" class="game_area_description">
+		<h2>About This Game</h2>
+		Get the DARK SOULS™ III Season Pass now and challenge yourself with all the available content!<br>
+		<br>
+		Winner of gamescom award 2015 "Best RPG" and over 35 E3 2015 Awards and Nominations.<br>
+		<br>
+		DARK SOULS™ III continues to push the boundaries with the latest, ambitious chapter in the critically-acclaimed and genre-defining series. <br>
+		<br>
+		As fires fade and the world falls into ruin, journey into a universe filled with more colossal enemies and environments. Players will be immersed into a world of epic atmosphere and darkness through faster gameplay and amplified combat intensity. Fans and newcomers alike will get lost in the game hallmark rewarding gameplay and immersive graphics. <br>
+		Now only embers remain… Prepare yourself once more and Embrace The Darkness!						
+	</div>
+</div>
+
+<div class="game_page_autocollapse sys_req" style="max-height: none;">
+	<h2>System Requirements</h2>
+	<div class="sysreq_contents">
+		<div class="game_area_sys_req sysreq_content active" data-os="win">
+			<div class="game_area_sys_req_leftCol">
+				<ul>
+					<strong>Minimum:</strong><br>
+					<ul class="bb_ul">
+						<li><strong>OS:</strong> Windows 7 SP1 64bit, Windows 8.1 64bit Windows 10 64bit<br></li>
+						<li><strong>Processor:</strong> Intel Core i3-2100 / AMD® FX-6300<br></li>
+						<li><strong>Memory:</strong> 4 GB RAM<br></li>
+						<li><strong>Graphics:</strong> NVIDIA® GeForce GTX 750 Ti / ATI Radeon HD 7950<br></li>
+						<li><strong>DirectX:</strong> Version 11<br></li>
+						<li><strong>Network:</strong> Broadband Internet connection<br></li>
+						<li><strong>Storage:</strong> 25 GB available space<br></li>
+						<li><strong>Sound Card:</strong> DirectX 11 sound device<br></li>
+						<li><strong>Additional Notes:</strong> Internet connection required for online play and product activation</li>
+					</ul>
+				</ul>
+			</div>
+			<div class="game_area_sys_req_rightCol">
+				<ul>
+					<strong>Recommended:</strong><br>
+					<ul class="bb_ul">
+						<li><strong>OS:</strong> Windows 7 SP1 64bit, Windows 8.1 64bit Windows 10 64bit<br></li>
+						<li><strong>Processor:</strong> Intel Core i7-3770 / AMD® FX-8350<br></li>
+						<li><strong>Memory:</strong> 8 GB RAM<br></li>
+						<li><strong>Graphics:</strong> NVIDIA® GeForce GTX 970 / ATI Radeon R9 series<br></li>
+						<li><strong>DirectX:</strong> Version 11<br></li>
+						<li><strong>Network:</strong> Broadband Internet connection<br></li>
+						<li><strong>Storage:</strong> 25 GB available space<br></li>
+						<li><strong>Sound Card:</strong> DirectX 11 sound device<br></li>
+						<li><strong>Additional Notes:</strong> Internet connection required for online play and product activation</li>
+					</ul>
+				</ul>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+</div>

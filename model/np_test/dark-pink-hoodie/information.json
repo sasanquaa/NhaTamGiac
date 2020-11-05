@@ -1,0 +1,10 @@
+{
+	"name": "Dark Pink Hoodie",
+	"brand": "Brand 2",
+	"avail": true,
+	"price": 300000.0,
+	"type": "clothes",
+	"size": ["XL"],
+	"release": null
+	
+}

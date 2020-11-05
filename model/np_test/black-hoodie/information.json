@@ -1,0 +1,9 @@
+{
+	"name": "Black Hoodie",
+	"brand": "Brand 1",
+	"avail": true,
+	"price": 200000.0,
+	"type": "clothes",
+	"size": ["L","XL"],
+	"release": null
+ }

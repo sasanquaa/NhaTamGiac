@@ -1,0 +1,9 @@
+{
+	"name": "Pink Hoodie",
+	"brand": "Brand 3",
+	"avail": true,
+	"price": 350000.0,
+	"type": "clothes",
+	"size": ["L","XL"],
+	"release": null
+}
