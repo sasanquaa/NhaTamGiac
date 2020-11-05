@@ -12,7 +12,7 @@ var session = require('express-session');
 var db = require('./model/db.js');
 var util = require('./control/utilities.js');
 
-var port = 8080;
+var port = process.env.PORT || 8080;
 
 app.use('/static', express.static('static'));
 app.use(flash());
