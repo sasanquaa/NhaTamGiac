@@ -84,6 +84,22 @@
 
 				<section class='report-section'>
 					<div class='wrapper'>
+
+						{% if messages.length != 0 %}
+						<div class="alert" style="
+												width: 100%;
+												height: 50px;
+												text-align: center;
+												padding: 10px 0;
+												font-size: 20px;
+												background: #22b312;
+												font-family: 'Segoe UI';
+												color: white;
+											">
+								Đã gửi báo cáo thành công!
+							</div>
+						{% endif %}
+
 						<form class='report-form' action='/report/submit' method='post'>
 							<label class='required'>Nội dung</label>
 							<textarea name='contents' class='report-text' required='true'></textarea>

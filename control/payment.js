@@ -16,6 +16,7 @@ module.exports = function(app, NAMESPACE) {
 
 		res.render('shop_payment', {
 			current_user: req.session.user,
+			messages: req.flash('payment'),
 			total: total,
 			cart: cart,
 			cart_count: cart ? Object.values(cart).reduce((a, b) => a + b.qty, 0) : 0
@@ -54,8 +55,10 @@ module.exports = function(app, NAMESPACE) {
 				payment._id = p.payments.length;
 				p.payments.push(payment);
 			}
-
 			p.save();
+			req.session.cart = {};
+			req.flash('payment', 'Đặt hàng thành công!');
+			res.redirect('/payment');
 		});
 
 

@@ -98,6 +98,22 @@
 				<section class='payment-section'>
 					<div class='wrapper'>
 						<h3>Thanh toán giỏ hàng</h3>
+
+						{% if messages.length != 0 %}
+						<div class="alert" style="
+												width: 100%;
+												height: 50px;
+												text-align: center;
+												padding: 10px 0;
+												font-size: 20px;
+												background: #22b312;
+												font-family: 'Segoe UI';
+												color: white;
+											">
+								Đã gửi đặt hàng thành công!
+							</div>
+						{% endif %}
+
 						{% if cart|length == 0%}
 						<h3 style='border-bottom: none; text-align: center; margin: 0; height: 200px; padding: 80px 0; font-size: 28px;'>Không có món hàng nào trong giỏ.</h3>
 						{% endif %}

@@ -9,6 +9,7 @@ module.exports = function(app, NAMESPACE) {
 		var cart = req.session.cart;
 		res.render('shop_report', {
 			current_user: req.session.user,
+			messages: req.flash('report'),
 			cart_count: cart ? Object.values(cart).reduce((a, b) => a + b.qty, 0) : 0
 		});
 	}
@@ -37,6 +38,8 @@ module.exports = function(app, NAMESPACE) {
 				usr.reports.push(report);
 			}
 			usr.save();
+			req.flash('report', 'Đã gửi báo cáo thành công.');
+			res.redirect('/report');
 		});
 	}
 
