@@ -1,0 +1,15 @@
+{
+    "_id": "620cd064-2b53-58bb-889e-b4dd40e3ceea",
+	"name": "Test New Product",
+    "images": [],    
+    "description": "Test description",    
+	"brand": "Test Brand",
+	"avail": true,
+	"price": 300000.0,
+	"type": "game",
+	"size": null,
+	"release": "2019-02-3",
+    "__v": 0	
+}
+
+

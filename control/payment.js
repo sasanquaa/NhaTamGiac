@@ -1,5 +1,3 @@
-const report = require('./report');
-
 module.exports = function(app, NAMESPACE) {
 	
 	const uuid = require('uuid').v5;

@@ -16,6 +16,7 @@ module.exports = function(app, NAMESPACE, shuffle) {
 
 		product.next().then(p => {
 			if(p == null) res.redirect('/error');
+			for(var i = 0; i < p.images.length; i++) p.images[i] = null; 
 			res.render('shop_product', {
 				product: p, 
 				product_id: pid, 
